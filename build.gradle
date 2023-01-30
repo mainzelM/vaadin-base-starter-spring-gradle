@@ -33,10 +33,18 @@ configurations {
 
 dependencies {
 	implementation('com.vaadin:vaadin-spring-boot-starter')
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation('org.springframework.boot:spring-boot-starter-validation')
+	runtimeOnly('com.h2database:h2')
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation('org.springframework.boot:spring-boot-starter-test') {
-		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		//exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
+	testImplementation('org.junit.vintage:junit-vintage-engine') {
+		exclude group: 'org.hamcrest', module: 'hamcrest-core'
+	}
+	testImplementation('com.vaadin:vaadin-testbench')
+	testImplementation('io.github.bonigarcia:webdrivermanager:5.1.1')
 }
 
 dependencyManagement {
@@ -49,9 +57,6 @@ test {
 	useJUnitPlatform()
 }
 
-// The following pnpmEnable = true is not needed as pnpm is used by default,
-// this is just an example of how to configure the Gradle Vaadin Plugin:
-// for more configuration options please see: https://vaadin.com/docs/latest/guide/start/gradle/#all-options
 vaadin {
-	pnpmEnable = true
+	optimizeBundle = false
 }
